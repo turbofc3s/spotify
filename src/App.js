@@ -11,9 +11,10 @@ var client_id = 'e700c58ae14e4e0db1a89f152c923f9e'; // Your client id
 var client_secret = 'e97bc1e59edf485eaff0238479fe4bd0'; // Your secret
 
  const [token, setToken] = useState('');
- const [searchTrack, setSearchTrack] = useState('');
+ const [searchId, setSearchId] = useState('');
  const [searchInput, setSearchInput] = useState('');
-
+ const [albums, setAlbums] = useState([])
+ 
  useEffect (() => {
   axios('https://accounts.spotify.com/api/token', {
     headers: {
@@ -26,22 +27,48 @@ var client_secret = 'e97bc1e59edf485eaff0238479fe4bd0'; // Your secret
   .then(tokenResponse => {
     console.log(tokenResponse.data);
     setToken(tokenResponse.data.access_token);
+    });  
+ }, []);
+
+// Search
+async function search() {
+  console.log('Search for ' + searchInput); // Usher
+
+// get request using search to get artist id then return and save in a variable
+//
+
+let searchParameters = {
+  method: 'GET',
+  headers: {
+    'Authorization':'Bearer ' +  token}
+  }
 
 
-  axios('https://api.spotify.com/v1/search?q=Usher&type=album,track', {
-    method: 'GET',
-    headers: {
-      'Authorization':'Bearer ' +  tokenResponse.data.access_token},
-    // params: {
-    //   query: 'janet jackson'
-    // }
-    })
+let artistID = await axios('https://api.spotify.com/v1/search?q=' + searchInput + '&type=artist', searchParameters)
+    // method: 'GET',
+//     headers: {
+//       'Authorization':'Bearer ' +  token},
+//     })
    .then(searchResponse => {
     console.log(searchResponse)
-     setSearchTrack(searchResponse.data.albums.items[0].images[1].url )
-   }) ; 
-  });  
- }, []);
+    return searchResponse.data.artists.items[0].id 
+         
+   });
+   console.log('Artistid is ' + artistID )
+
+let returnedalbums = await axios('https://api.spotify.com/v1/artists/' + artistID + '/albums' + '?include_groups=album&market=US&limit=50', searchParameters)
+//     method: 'GET',
+//     headers: {
+//       'Authorization':'Bearer ' +  token},
+//     })
+   .then(searchResponse => {
+    console.log(searchResponse)
+    setAlbums(searchResponse.data.items)
+
+   }) ;
+
+}  
+  
 
   return (
     <div className='App'>      
@@ -53,12 +80,12 @@ var client_secret = 'e97bc1e59edf485eaff0238479fe4bd0'; // Your secret
              type='input'
              onKeyPress={event => {
               if (event.key == 'Enter') {
-                console.log('Pressed Enter');
+                search(); 
               }
              }}
              onChange={event => setSearchInput(event.target.value)}
            />
-           <Button onClick={() => {console.log('Clicked Button')}}>
+           <Button onClick={search}>
              Search
            </Button>
         </InputGroup>
