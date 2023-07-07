@@ -11,7 +11,7 @@ var client_id = 'e700c58ae14e4e0db1a89f152c923f9e'; // Your client id
 var client_secret = 'e97bc1e59edf485eaff0238479fe4bd0'; // Your secret
 
  const [token, setToken] = useState('');
- const [searchId, setSearchId] = useState('');
+ // const [searchId, setSearchId] = useState('');
  const [searchInput, setSearchInput] = useState('');
  const [tracks, setTracks] = useState([])
  
@@ -67,7 +67,11 @@ let returnedTracks = await axios('https://api.spotify.com/v1/artists/' + artistI
    }) ;
 }  
   
-console.log(tracks)
+// console.log(tracks)
+
+const playTrack = () => {
+  // console.log('track is playing')
+}
 
   return (
     <div className='App'>      
@@ -95,9 +99,9 @@ console.log(tracks)
             console.log(track);
             return (
               <Card key={i}>
-              <Card.Img src={tracks[0].album.images[0].url} />
+              <Card.Img src={tracks[i].album.images[0].url} />
               <Card.Body>
-                <Card.Title>{tracks[i].name}</Card.Title>
+                <Card.Title onClick={playTrack}>{tracks[i].name}</Card.Title>
               </Card.Body>
             </Card>
             )
