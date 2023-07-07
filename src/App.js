@@ -64,11 +64,10 @@ let returnedalbums = await axios('https://api.spotify.com/v1/artists/' + artistI
    .then(searchResponse => {
     console.log(searchResponse)
     setAlbums(searchResponse.data.items)
-
    }) ;
-
 }  
   
+console.log(albums)
 
   return (
     <div className='App'>      
@@ -92,12 +91,23 @@ let returnedalbums = await axios('https://api.spotify.com/v1/artists/' + artistI
       </Container>
       <Container>
         <Row className="mx-2 row row-cols-4">
-          <Card>
-            <Card.Img src='#' />
-            <Card.Body>
-              <Card.Title>Album name</Card.Title>
-            </Card.Body>
-          </Card>  
+          {albums.map( ( album, i) => {
+            console.log(album);
+            return (
+              <Card key={i}>
+              <Card.Img src={album.images[0].url} />
+              <Card.Body>
+                <Card.Title>{album.name}</Card.Title>
+              </Card.Body>
+            </Card>
+            )
+          })}
+            <Card>
+              <Card.Img src='#' />
+              <Card.Body>
+                <Card.Title>Album name</Card.Title>
+              </Card.Body>
+            </Card>           
         </Row>         
       </Container>
     </div> 
