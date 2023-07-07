@@ -13,7 +13,7 @@ var client_secret = 'e97bc1e59edf485eaff0238479fe4bd0'; // Your secret
  const [token, setToken] = useState('');
  const [searchId, setSearchId] = useState('');
  const [searchInput, setSearchInput] = useState('');
- const [albums, setAlbums] = useState([])
+ const [tracks, setTracks] = useState([])
  
  useEffect (() => {
   axios('https://accounts.spotify.com/api/token', {
@@ -25,14 +25,14 @@ var client_secret = 'e97bc1e59edf485eaff0238479fe4bd0'; // Your secret
     method: 'POST'    
    })
   .then(tokenResponse => {
-    console.log(tokenResponse.data);
+    // console.log(tokenResponse.data);
     setToken(tokenResponse.data.access_token);
     });  
  }, []);
 
 // Search
 async function search() {
-  console.log('Search for ' + searchInput); // Usher
+  // console.log('Search for ' + searchInput); // Usher
 
 // get request using search to get artist id then return and save in a variable
 //
@@ -50,24 +50,24 @@ let artistID = await axios('https://api.spotify.com/v1/search?q=' + searchInput 
 //       'Authorization':'Bearer ' +  token},
 //     })
    .then(searchResponse => {
-    console.log(searchResponse)
+    // console.log(searchResponse)
     return searchResponse.data.artists.items[0].id 
          
    });
-   console.log('Artistid is ' + artistID )
+   // console.log('Artistid is ' + artistID )
 
-let returnedalbums = await axios('https://api.spotify.com/v1/artists/' + artistID + '/albums' + '?include_groups=album&market=US&limit=50', searchParameters)
+let returnedTracks = await axios('https://api.spotify.com/v1/artists/' + artistID + '/top-tracks' + '?market=US', searchParameters)
 //     method: 'GET',
 //     headers: {
 //       'Authorization':'Bearer ' +  token},
 //     })
    .then(searchResponse => {
     console.log(searchResponse)
-    setAlbums(searchResponse.data.items)
+    setTracks(searchResponse.data.tracks)
    }) ;
 }  
   
-console.log(albums)
+console.log(tracks)
 
   return (
     <div className='App'>      
@@ -91,23 +91,17 @@ console.log(albums)
       </Container>
       <Container>
         <Row className="mx-2 row row-cols-4">
-          {albums.map( ( album, i) => {
-            console.log(album);
+          {tracks.map( ( track, i) => {
+            console.log(track);
             return (
               <Card key={i}>
-              <Card.Img src={album.images[0].url} />
+              <Card.Img src={tracks[0].album.images[0].url} />
               <Card.Body>
-                <Card.Title>{album.name}</Card.Title>
+                <Card.Title>{tracks[i].name}</Card.Title>
               </Card.Body>
             </Card>
             )
-          })}
-            <Card>
-              <Card.Img src='#' />
-              <Card.Body>
-                <Card.Title>Album name</Card.Title>
-              </Card.Body>
-            </Card>           
+          })}                      
         </Row>         
       </Container>
     </div> 
