@@ -11,7 +11,6 @@ var client_id = 'e700c58ae14e4e0db1a89f152c923f9e'; // Your client id
 var client_secret = 'e97bc1e59edf485eaff0238479fe4bd0'; // Your secret
 
  const [token, setToken] = useState('');
- // const [searchId, setSearchId] = useState('');
  const [searchInput, setSearchInput] = useState('');
  const [tracks, setTracks] = useState([])
  
@@ -25,7 +24,7 @@ var client_secret = 'e97bc1e59edf485eaff0238479fe4bd0'; // Your secret
     method: 'POST'    
    })
   .then(tokenResponse => {
-    // console.log(tokenResponse.data);
+    console.log(tokenResponse.data);
     setToken(tokenResponse.data.access_token);
     });  
  }, []);
@@ -33,45 +32,44 @@ var client_secret = 'e97bc1e59edf485eaff0238479fe4bd0'; // Your secret
 // Search
 async function search() {
   // console.log('Search for ' + searchInput); // Usher
-
 // get request using search to get artist id then return and save in a variable
 //
-
 let searchParameters = {
   method: 'GET',
   headers: {
     'Authorization':'Bearer ' +  token}
   }
 
-
 let artistID = await axios('https://api.spotify.com/v1/search?q=' + searchInput + '&type=artist', searchParameters)
-    // method: 'GET',
-//     headers: {
-//       'Authorization':'Bearer ' +  token},
-//     })
-   .then(searchResponse => {
-    // console.log(searchResponse)
-    return searchResponse.data.artists.items[0].id 
-         
+    .then(searchResponse => {
+    console.log(searchResponse)
+    return searchResponse.data.artists.items[0].id          
    });
-   // console.log('Artistid is ' + artistID )
+   console.log('Artistid is ' + artistID )
 
-let returnedTracks = await axios('https://api.spotify.com/v1/artists/' + artistID + '/top-tracks' + '?market=US', searchParameters)
-//     method: 'GET',
-//     headers: {
-//       'Authorization':'Bearer ' +  token},
-//     })
+await axios('https://api.spotify.com/v1/artists/' + artistID + '/top-tracks' + '?market=US', searchParameters)
    .then(searchResponse => {
     console.log(searchResponse)
     setTracks(searchResponse.data.tracks)
    }) ;
+
+await axios('https://api.spotify.com/v1/me/player/play',
+   method: 'PUT',
+   headers: {
+    'Authorization':'Bearer ' +  token,
+    'Content-Type: application/json'
+   }
+   data: {
+    {"uris": ["spotify:track:tracks[0].id" ]}
+   }
+   .then(searchResponse => {
+    console.log(searchResponse)
+   })
+  )
+  
 }  
   
-// console.log(tracks)
-
-const playTrack = () => {
-  // console.log('track is playing')
-}
+console.log(tracks)
 
   return (
     <div className='App'>      
@@ -79,7 +77,7 @@ const playTrack = () => {
         <h1>Spotify App</h1>
         <InputGroup className='mb-3' size='lg' >
            <FormControl
-             placeholder="Search For Artist"
+             placeholder="Search An Artist For Top Tracks"
              type='input'
              onKeyPress={event => {
               if (event.key == 'Enter') {
@@ -101,7 +99,7 @@ const playTrack = () => {
               <Card key={i}>
               <Card.Img src={tracks[i].album.images[0].url} />
               <Card.Body>
-                <Card.Title onClick={playTrack}>{tracks[i].name}</Card.Title>
+                <Card.Title>{tracks[i].name}</Card.Title>
               </Card.Body>
             </Card>
             )
