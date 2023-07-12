@@ -47,28 +47,29 @@ let artistID = await axios('https://api.spotify.com/v1/search?q=' + searchInput 
    });
    console.log('Artistid is ' + artistID )
 
+
 await axios('https://api.spotify.com/v1/artists/' + artistID + '/top-tracks' + '?market=US', searchParameters)
    .then(searchResponse => {
     console.log(searchResponse)
     setTracks(searchResponse.data.tracks)
    }) ;
 
-await axios('https://api.spotify.com/v1/me/player/play',
-   method: 'PUT',
+await axios.put('https://api.spotify.com/v1/me/player/play', {
    headers: {
-    'Authorization':'Bearer ' +  token,
-    'Content-Type: application/json'
-   }
+    'Authorization':'Bearer ' + token,
+    'Content-Type' :' application/json' 
+   }, 
    data: {
-    {"uris": ["spotify:track:tracks[0].id" ]}
-   }
+    "uris": ['tracks[0].uri']}      
+})
    .then(searchResponse => {
     console.log(searchResponse)
    })
-  )
-  
 }  
   
+ // const handlePlay = () => {
+ //  console.log('handleplay is working')
+ // } 
 console.log(tracks)
 
   return (
