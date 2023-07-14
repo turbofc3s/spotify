@@ -54,13 +54,13 @@ await axios('https://api.spotify.com/v1/artists/' + artistID + '/top-tracks' + '
     setTracks(searchResponse.data.tracks)
    }) ;
 
-await axios.put('https://api.spotify.com/v1/me/player/play', {
+axios('https://api.spotify.com/v1/me/player/play', {
    headers: {
-    'Authorization':'Bearer ' + token,
+    'Authorization': 'Bearer ' + token,
     'Content-Type' :' application/json' 
    }, 
-   data: {
-    "uris": ['tracks[0].uri']}      
+   data: {"uris": ['tracks[0].uri']}, 
+   method: 'POST'     
 })
    .then(searchResponse => {
     console.log(searchResponse)
