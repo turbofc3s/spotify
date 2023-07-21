@@ -53,23 +53,27 @@ await axios('https://api.spotify.com/v1/artists/' + artistID + '/top-tracks' + '
     console.log(searchResponse)
     setTracks(searchResponse.data.tracks)
    }) ;
+  
+} 
 
-axios('https://api.spotify.com/v1/me/player/play', {
+
+  
+ const handlePlay = () => {
+  // needs to go to another page do the api call the the play endpoint and play
+   axios('https://api.spotify.com/v1/me/player/play', {
    headers: {
     'Authorization': 'Bearer ' + token,
     'Content-Type' :' application/json' 
    }, 
-   data: {"uris": ['tracks[0].uri']}, 
-   method: 'POST'     
+   data: {"uris": [tracks[0].uri]}, 
+   method: 'PUT'     
 })
    .then(searchResponse => {
     console.log(searchResponse)
    })
-}  
-  
- // const handlePlay = () => {
- //  console.log('handleplay is working')
- // } 
+   // console.log(newUri)
+  // console.log('handleplay is working')
+ } 
 console.log(tracks)
 
   return (
@@ -98,9 +102,9 @@ console.log(tracks)
             console.log(track);
             return (
               <Card key={i}>
-              <Card.Img src={tracks[i].album.images[0].url} />
+              <Card.Img onClick={handlePlay}                                                  src={tracks[i].album.images[0].url} />
               <Card.Body>
-                <Card.Title>{tracks[i].name}</Card.Title>
+                <Card.Title onClick={handlePlay}>{tracks[i].name}</Card.Title>
               </Card.Body>
             </Card>
             )
