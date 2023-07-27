@@ -59,22 +59,27 @@ await axios('https://api.spotify.com/v1/artists/' + artistID + '/top-tracks' + '
 
   
  const handlePlay = () => {
+  // <a href = 'https://open.spotify.com/track/2goLsvvODILDzeeiT4dAoR'></a>
+
+  // return https://open.spotify.com/track/2goLsvvODILDzeeiT4dAoR
+
+  // <a href="https://open.spotify.com/search"></a>
   // needs to go to another page do the api call the the play endpoint and play
-   axios('https://api.spotify.com/v1/me/player/play', {
-   headers: {
-    'Authorization': 'Bearer ' + token,
-    'Content-Type' :' application/json' 
-   }, 
-   data: {"uris": [tracks[0].uri]}, 
-   method: 'PUT'     
-})
-   .then(searchResponse => {
-    console.log(searchResponse)
-   })
-   // console.log(newUri)
-  // console.log('handleplay is working')
+   // axios('https://api.spotify.com/v1/me/player/play', {
+   // headers: {
+   //  'Authorization': 'Bearer ' + token,
+   //  'Content-Type' :' application/json' 
+   // }, 
+   // data: {"uris": [tracks[0].uri]}, 
+   // method: 'PUT'     
+// })
+  //  .then(searchResponse => {
+  //   console.log(searchResponse)
+  //  })
+  //  console.log(newUri)
+  console.log(tracks[0].external_urls.spotify)
  } 
-console.log(tracks)
+// console.log(tracks)
 
   return (
     <div className='App'>      
@@ -99,10 +104,10 @@ console.log(tracks)
       <Container>
         <Row className="mx-2 row row-cols-4">
           {tracks.map( ( track, i) => {
-            console.log(track);
+            
             return (
               <Card key={i}>
-              <Card.Img onClick={handlePlay}                                                  src={tracks[i].album.images[0].url} />
+              <Card.Img onClick={handlePlay} src={tracks[i].album.images[0].url} />
               <Card.Body>
                 <Card.Title onClick={handlePlay}>{tracks[i].name}</Card.Title>
               </Card.Body>
