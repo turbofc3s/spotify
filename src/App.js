@@ -52,32 +52,22 @@ await axios('https://api.spotify.com/v1/artists/' + artistID + '/top-tracks' + '
    .then(searchResponse => {
     console.log(searchResponse)
     setTracks(searchResponse.data.tracks)
-   }) ;
-  
+   }) ;  
 } 
 
-
-  
  const handlePlay = () => {
-  // <a href = 'https://open.spotify.com/track/2goLsvvODILDzeeiT4dAoR'></a>
+  //function on an array that lets you perfom a functiton on each element of the array
+    const newTracks = tracks.map((track,i) => {
+      return (
+        <div key={i}>{track}</div>
+        );
+    });
 
-  // return https://open.spotify.com/track/2goLsvvODILDzeeiT4dAoR
+    console.log(newTracks)
+     // return <div>{newTracks}</div>;
+     //       window.open(newTracks[i].external_urls.spotify, '_blank');
 
-  // <a href="https://open.spotify.com/search"></a>
-  // needs to go to another page do the api call the the play endpoint and play
-   // axios('https://api.spotify.com/v1/me/player/play', {
-   // headers: {
-   //  'Authorization': 'Bearer ' + token,
-   //  'Content-Type' :' application/json' 
-   // }, 
-   // data: {"uris": [tracks[0].uri]}, 
-   // method: 'PUT'     
-// })
-  //  .then(searchResponse => {
-  //   console.log(searchResponse)
-  //  })
-  //  console.log(newUri)
-  console.log(tracks[0].external_urls.spotify)
+
  } 
 // console.log(tracks)
 
