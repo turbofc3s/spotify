@@ -55,20 +55,22 @@ await axios('https://api.spotify.com/v1/artists/' + artistID + '/top-tracks' + '
    }) ;  
 } 
 
- const handlePlay = () => {
-  //function on an array that lets you perfom a functiton on each element of the array
-    const newTracks = tracks.map((track,i) => {
-      return (
-        <div key={i}>{track}</div>
-        );
-    });
+ // const handlePlay = () => {
+ //   // if (tracks[i]) //function on an array that lets you perfom a functiton on each element of the array
+ //    // const newTracks = tracks.map((track,i) => {
+ //    //   return (
+ //    //     <div key={i}>{track}</div>
+ //    //     );
+ //    // });
 
-    console.log(newTracks)
-     // return <div>{newTracks}</div>;
-     //       window.open(newTracks[i].external_urls.spotify, '_blank');
+ //  // return <div>{newTracks}</div>;
 
+ //     {
+ //      window.open(tracks[0].external_urls.spotify, '_blank')
+ //   }
 
- } 
+ 
+ // } 
 // console.log(tracks)
 
   return (
@@ -97,9 +99,9 @@ await axios('https://api.spotify.com/v1/artists/' + artistID + '/top-tracks' + '
             
             return (
               <Card key={i}>
-              <Card.Img onClick={handlePlay} src={tracks[i].album.images[0].url} />
+              <Card.Img src={tracks[i].album.images[0].url} />
               <Card.Body>
-                <Card.Title onClick={handlePlay}>{tracks[i].name}</Card.Title>
+                <Card.Title><a href= {tracks[i].external_urls.spotify} target='_blank'>{tracks[i].name}</a></Card.Title>
               </Card.Body>
             </Card>
             )
