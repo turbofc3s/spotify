@@ -24,7 +24,7 @@ var client_secret = process.env.REACT_APP_client_secret;
   .then(tokenResponse => {
     setToken(tokenResponse.data.access_token);
     });  
- }, [client_id, client_secret]);
+ }, []);
 
 async function search() {
 
