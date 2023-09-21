@@ -7,7 +7,7 @@
 When the page loads you are prompted in the input box to search for an artist.  A list of songs come up after you search and when you click on one you are taken to a new tab where you are able to play that song.
 
 ## Technologies Used
-React, Css, Axios, Bootstrap and CLI
+React, Css, Axios, Bootstrap
 
 ## Quick Start
 1. git clone
