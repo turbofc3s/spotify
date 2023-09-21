@@ -10,10 +10,12 @@ When the page loads you are prompted in the input box to search for an artist.  
 React, Npm start, Css, Axios, Bootstrap and CLI
 
 ## Quick Start
-npx create-react-app spotifys
+1. git clone
+ 
+2. cd into spotify
 
-cd spotifys
-
-npm start to start up the development server
+3. npm install
+   
+4. npm start to install on local server
 
 
